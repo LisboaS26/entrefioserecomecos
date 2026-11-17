@@ -32,6 +32,7 @@
 @theme inline {
   --font-display: "Fraunces", Georgia, serif;
   --font-sans: "Nunito", system-ui, sans-serif;
+  --font-script: "Dancing Script", "Brush Script MT", cursive;
   --color-whatsapp: var(--whatsapp);
   --color-whatsapp-foreground: var(--whatsapp-foreground);
   --color-instagram: var(--instagram);
@@ -81,29 +82,36 @@
 
 :root {
   --radius: 1rem;
-  --background: oklch(0.965 0.02 80);
-  --foreground: oklch(0.29 0.045 45);
+  --background: oklch(0.972 0.018 80);
+  --foreground: oklch(0.3 0.055 40);
   --card: oklch(0.99 0.01 85);
-  --card-foreground: oklch(0.29 0.045 45);
+  --card-foreground: oklch(0.3 0.055 40);
   --popover: oklch(0.99 0.01 85);
-  --popover-foreground: oklch(0.29 0.045 45);
-  --primary: oklch(0.55 0.13 40);
+  --popover-foreground: oklch(0.3 0.055 40);
+  --primary: oklch(0.56 0.17 358);
   --primary-foreground: oklch(0.98 0.012 85);
-  --secondary: oklch(0.87 0.045 140);
-  --secondary-foreground: oklch(0.3 0.05 145);
+  --secondary: oklch(0.93 0.035 5);
+  --secondary-foreground: oklch(0.32 0.06 15);
   --muted: oklch(0.93 0.022 78);
-  --muted-foreground: oklch(0.5 0.04 50);
-  --accent: oklch(0.82 0.12 82);
-  --accent-foreground: oklch(0.3 0.06 60);
+  --muted-foreground: oklch(0.48 0.045 40);
+  --accent: oklch(0.9 0.06 140);
+  --accent-foreground: oklch(0.33 0.07 145);
   --destructive: oklch(0.55 0.2 27);
   --destructive-foreground: oklch(0.98 0.01 85);
-  --border: oklch(0.86 0.03 70);
-  --input: oklch(0.84 0.03 70);
-  --ring: oklch(0.55 0.13 40);
+  --border: oklch(0.87 0.03 40);
+  --input: oklch(0.85 0.03 40);
+  --ring: oklch(0.56 0.17 358);
   --whatsapp: oklch(0.52 0.12 155);
   --whatsapp-foreground: oklch(0.98 0.01 150);
   --instagram: oklch(0.56 0.17 10);
   --instagram-foreground: oklch(0.98 0.01 10);
+  /* Cores do fio arco-íris da borda da logo */
+  --fio-1: oklch(0.62 0.2 355);
+  --fio-2: oklch(0.72 0.17 50);
+  --fio-3: oklch(0.85 0.16 95);
+  --fio-4: oklch(0.65 0.15 150);
+  --fio-5: oklch(0.6 0.13 240);
+  --fio-6: oklch(0.52 0.17 305);
   --shadow-soft-value: 0 18px 40px -22px color-mix(in oklab, var(--foreground) 45%, transparent);
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
@@ -165,6 +173,36 @@
     color: var(--color-foreground);
     font-family: var(--font-sans);
   }
+}
+
+/* Faixa colorida igual ao fio da borda da logo */
+@utility fio-arco-iris {
+  background-image: linear-gradient(
+    90deg,
+    var(--fio-1),
+    var(--fio-2),
+    var(--fio-3),
+    var(--fio-4),
+    var(--fio-5),
+    var(--fio-6),
+    var(--fio-1)
+  );
+}
+
+/* Moldura redonda/arredondada com o fio arco-íris por fora */
+@utility moldura-fio {
+  background:
+    linear-gradient(var(--card), var(--card)) padding-box,
+    conic-gradient(
+      var(--fio-1),
+      var(--fio-2),
+      var(--fio-3),
+      var(--fio-4),
+      var(--fio-5),
+      var(--fio-6),
+      var(--fio-1)
+    ) border-box;
+  border: 4px solid transparent;
 }
 
 /* Fundo com textura de pontinhos, lembrando a trama do crochê */

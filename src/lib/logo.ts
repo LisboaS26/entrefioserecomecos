@@ -1,6 +1,6 @@
 // A logo da loja: basta colocar o arquivo em src/assets com o nome começando
-// em "logo" (ex.: logo.png.asset.json) que ela aparece no topo do site e como
-// ícone da aba do navegador.
+// em "logo" (ex.: logo.png.asset.json) que ela aparece no topo e no rodapé.
+// O ícone da aba é o arquivo public/favicon.png (gerado a partir da logo).
 type PonteiroAsset = { url: string };
 
 const logos = import.meta.glob<PonteiroAsset>("../assets/logo*.asset.json", {

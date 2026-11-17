@@ -11,7 +11,6 @@ import {
 import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
-import { logoUrl } from "../lib/logo";
 import { SiteFooter } from "../components/loja/SiteFooter";
 import { SiteHeader } from "../components/loja/SiteHeader";
 import { Toaster } from "../components/ui/sonner";
@@ -86,7 +85,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: "Entre Fios e Recomeços — Bolsas e acessórios de crochê" },
-      { name: "description", content: "Bolsas e acessórios de crochê feitos à mão. Peça pelo WhatsApp ou Instagram." },
+      { name: "description", content: "Bolsas de crochê feitas à mão. Tecendo novos caminhos, ponto a ponto. Peça pelo WhatsApp ou Instagram." },
       { property: "og:title", content: "Entre Fios e Recomeços" },
       { property: "og:description", content: "Bolsas e acessórios de crochê feitos à mão." },
       { property: "og:type", content: "website" },
@@ -97,13 +96,12 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         rel: "stylesheet",
         href: appCss,
       },
-      ...(logoUrl ? [{ rel: "icon", href: logoUrl }] : []),
-      { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
+      { rel: "icon", type: "image/png", href: "/favicon.png" },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
         rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..700&family=Nunito:wght@400;600;700;800&display=swap",
+        href: "https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..700&family=Nunito:wght@400;600;700;800&family=Dancing+Script:wght@600;700&display=swap",
       },
     ],
   }),

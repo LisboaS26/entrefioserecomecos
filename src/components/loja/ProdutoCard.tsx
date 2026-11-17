@@ -6,8 +6,8 @@ import { formatarPreco, type Produto } from "@/lib/produtos";
 
 export function ProdutoCard({ produto, numero }: { produto: Produto; numero: number }) {
   return (
-    <article className="group flex flex-col overflow-hidden rounded-3xl bg-card shadow-soft ring-1 ring-border">
-      <div className="relative aspect-square overflow-hidden bg-muted">
+    <article className="group flex flex-col overflow-hidden rounded-3xl bg-card shadow-soft ring-1 ring-border transition-transform duration-300 hover:-translate-y-1">
+      <div className="relative aspect-[4/5] overflow-hidden bg-muted">
         <img
           src={produto.imagem}
           alt={produto.nome}

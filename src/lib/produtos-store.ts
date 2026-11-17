@@ -1,17 +1,22 @@
 import { useSyncExternalStore } from "react";
 
-import { fotosProntas } from "./imagens";
+import { fotos } from "./imagens";
 import type { Produto } from "./produtos";
 
-const CHAVE = "entre-fios-produtos";
-
-const [terracota, verde, redonda, acessorios] = fotosProntas;
+// v2: troca as peças de exemplo pelas bolsas reais (quem já abriu o site antes vê as novas).
+const CHAVE = "entre-fios-produtos-v2";
 
 export const produtosIniciais: Produto[] = [
-  { id: "1", nome: "Bolsa Aurora", preco: 189.9, categoria: "Bolsa", imagem: terracota.url },
-  { id: "2", nome: "Bolsa Sálvia", preco: 159.9, categoria: "Bolsa", imagem: verde.url },
-  { id: "3", nome: "Bolsa Lua", preco: 139.9, categoria: "Bolsa", imagem: redonda.url },
-  { id: "4", nome: "Kit Porta-moedas e Xuxinhas", preco: 59.9, categoria: "Acessório", imagem: acessorios.url },
+  { id: "1", nome: "Bolsa Saco Oliva", preco: 165, categoria: "Bolsa", imagem: fotos.sacoOliva },
+  { id: "2", nome: "Bolsa Noite na Mata", preco: 165, categoria: "Bolsa", imagem: fotos.noiteNaMata },
+  { id: "3", nome: "Bolsa Rosa Doce", preco: 150, categoria: "Bolsa", imagem: fotos.rosaDoce },
+  { id: "4", nome: "Bolsa Sálvia", preco: 165, categoria: "Bolsa", imagem: fotos.salvia },
+  { id: "5", nome: "Bolsa Esmeralda Dourada", preco: 150, categoria: "Bolsa", imagem: fotos.esmeraldaDourada },
+  { id: "6", nome: "Bolsa Elegância", preco: 170, categoria: "Bolsa", imagem: fotos.elegancia },
+  { id: "7", nome: "Bolsa Gala Dourada", preco: 300, categoria: "Bolsa", imagem: fotos.galaDourada },
+  { id: "8", nome: "Bolsa Girassol", preco: 165, categoria: "Bolsa", imagem: fotos.girassol },
+  { id: "9", nome: "Bolsa Flor de Lótus", preco: 180, categoria: "Bolsa", imagem: fotos.florDeLotus },
+  { id: "10", nome: "Bolsa Pérola", preco: 130, categoria: "Bolsa", imagem: fotos.perola },
 ];
 
 let produtos: Produto[] = produtosIniciais;

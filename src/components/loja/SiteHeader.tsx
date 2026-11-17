@@ -6,18 +6,23 @@ import { useProdutos } from "@/lib/produtos-store";
 export function SiteHeader() {
   const produtos = useProdutos();
   return (
-    <header className="border-b border-border bg-background/90 backdrop-blur sticky top-0 z-20">
-      <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3 px-5 py-4">
+    <header className="sticky top-0 z-20 bg-background/90 backdrop-blur">
+      <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3 px-5 py-3">
         <Link to="/" className="flex items-center gap-3">
           {logoUrl ? (
             <img
               src={logoUrl}
               alt="Logo Entre Fios e Recomeços"
-              className="h-11 w-auto max-w-[150px] object-contain sm:h-14"
+              className="size-14 rounded-full object-contain shadow-soft sm:size-16"
             />
           ) : null}
-          <span className="font-display text-xl leading-tight text-foreground sm:text-2xl">
-            Entre Fios <span className="italic text-primary">e Recomeços</span>
+          <span className="flex flex-col leading-tight">
+            <span className="font-display text-xl text-foreground sm:text-2xl">
+              Entre Fios <span className="font-script text-primary">e Recomeços</span>
+            </span>
+            <span className="hidden text-xs font-semibold tracking-wide text-muted-foreground sm:block">
+              artesanato feito à mão
+            </span>
           </span>
         </Link>
         <nav className="flex items-center gap-1 text-sm font-semibold">
@@ -41,6 +46,7 @@ export function SiteHeader() {
           </span>
         </nav>
       </div>
+      <div className="fio-arco-iris h-1" aria-hidden="true" />
     </header>
   );
 }
