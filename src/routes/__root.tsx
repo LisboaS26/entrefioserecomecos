@@ -11,6 +11,7 @@ import {
 import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
+import { logoUrl } from "../lib/logo";
 import { SiteFooter } from "../components/loja/SiteFooter";
 import { SiteHeader } from "../components/loja/SiteHeader";
 import { Toaster } from "../components/ui/sonner";
@@ -96,6 +97,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         rel: "stylesheet",
         href: appCss,
       },
+      ...(logoUrl ? [{ rel: "icon", href: logoUrl }] : []),
       { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },

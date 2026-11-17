@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router";
 
+import { logoUrl } from "@/lib/logo";
 import { useProdutos } from "@/lib/produtos-store";
 
 export function SiteHeader() {
@@ -7,8 +8,17 @@ export function SiteHeader() {
   return (
     <header className="border-b border-border bg-background/90 backdrop-blur sticky top-0 z-20">
       <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3 px-5 py-4">
-        <Link to="/" className="font-display text-xl leading-tight text-foreground sm:text-2xl">
-          Entre Fios <span className="italic text-primary">e Recomeços</span>
+        <Link to="/" className="flex items-center gap-3">
+          {logoUrl ? (
+            <img
+              src={logoUrl}
+              alt="Logo Entre Fios e Recomeços"
+              className="h-11 w-auto max-w-[150px] object-contain sm:h-14"
+            />
+          ) : null}
+          <span className="font-display text-xl leading-tight text-foreground sm:text-2xl">
+            Entre Fios <span className="italic text-primary">e Recomeços</span>
+          </span>
         </Link>
         <nav className="flex items-center gap-1 text-sm font-semibold">
           <Link
