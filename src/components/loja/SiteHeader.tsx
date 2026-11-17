@@ -26,8 +26,8 @@ export function SiteHeader() {
           >
             Cadastrar produto
           </Link>
-          <span className="ml-2 hidden rounded-full border border-dashed border-primary/50 px-3 py-1.5 text-xs text-primary sm:inline">
-            {produtos.length} produtos cadastrados
+          <span className="ml-1 rounded-full border border-dashed border-primary/50 px-3 py-1.5 text-xs text-primary">
+            {produtos.length}<span className="hidden sm:inline"> produtos cadastrados</span>
           </span>
         </nav>
       </div>

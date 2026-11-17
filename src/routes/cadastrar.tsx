@@ -82,7 +82,7 @@ function Cadastrar() {
   }
 
   return (
-    <div className="mx-auto grid max-w-6xl gap-10 px-5 py-14 lg:grid-cols-[1fr_1fr]">
+    <div className="mx-auto grid max-w-6xl gap-10 px-5 py-14 lg:grid-cols-2 [&>*]:min-w-0">
       <section>
         <p className="text-sm font-bold uppercase tracking-[0.2em] text-primary">Área da loja</p>
         <h1 className="mt-3 font-display text-4xl text-foreground sm:text-5xl">Cadastrar produto</h1>
