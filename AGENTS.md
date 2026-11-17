@@ -28,3 +28,8 @@ use the editor.
   own key and store it in Secrets.
 - **Secrets.** Lovable manages them. Do not put secret values in the repo.
 <!-- LOVABLE:END -->
+
+## Project rules
+- Store rules (price validation, product lookup, price formatting) live as pure functions in `src/lib/produtos.ts` with tests in `src/test/`; why: they mirror the original Python assignment and must stay checkable.
+- Products are kept in the browser's localStorage via `src/lib/produtos-store.ts` (no backend); why: school project kept simple — move to Lovable Cloud if real multi-device catalog is needed.
+- Store contacts (WhatsApp, Instagram) are defined only in `src/lib/contato.ts`; why: one place to change them.

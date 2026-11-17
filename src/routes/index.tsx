@@ -1,23 +1,127 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { Search } from "lucide-react";
+import { useState, type FormEvent } from "react";
 
-// The home route ships no og:image, so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
+import { ProdutoCard } from "@/components/loja/ProdutoCard";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { imagemHero } from "@/lib/imagens";
+import { consultarProduto, formatarPreco, type Produto } from "@/lib/produtos";
+import { useProdutos } from "@/lib/produtos-store";
+
 export const Route = createFileRoute("/")({
-  component: Index,
+  head: () => ({
+    meta: [
+      { title: "Entre Fios e Recomeços — Bolsas e acessórios de crochê" },
+      {
+        name: "description",
+        content: "Vitrine de bolsas e acessórios de crochê feitos à mão. Encomende pelo WhatsApp ou Instagram.",
+      },
+      { property: "og:title", content: "Entre Fios e Recomeços — Vitrine" },
+      { property: "og:description", content: "Bolsas e acessórios de crochê feitos à mão, ponto por ponto." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ],
+  }),
+  component: Vitrine,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
-function Index() {
+type Resultado = { tipo: "encontrado"; produto: Produto } | { tipo: "nao-encontrado" } | null;
+
+function Vitrine() {
+  const produtos = useProdutos();
+  const [busca, setBusca] = useState("");
+  const [resultado, setResultado] = useState<Resultado>(null);
+
+  function consultar(e: FormEvent) {
+    e.preventDefault();
+    const produto = consultarProduto(produtos, busca);
+    setResultado(produto ? { tipo: "encontrado", produto } : { tipo: "nao-encontrado" });
+  }
+
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
-    </div>
+    <>
+      <section className="bg-trama">
+        <div className="mx-auto grid max-w-6xl items-center gap-10 px-5 py-14 md:grid-cols-[1.1fr_1fr] md:py-20">
+          <div className="animate-subir">
+            <p className="text-sm font-bold uppercase tracking-[0.2em] text-primary">Feito à mão, com carinho</p>
+            <h1 className="mt-4 font-display text-5xl leading-[1.05] text-foreground sm:text-6xl">
+              Cada ponto, <span className="italic text-primary">um recomeço.</span>
+            </h1>
+            <p className="mt-5 max-w-md text-lg text-muted-foreground">
+              Bolsas e acessórios de crochê criados um a um. Escolha sua peça e fale com a gente pelo
+              WhatsApp ou Instagram.
+            </p>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <Button asChild variant="hero" size="lg">
+                <a href="#pecas">Ver as peças</a>
+              </Button>
+              <Button asChild variant="outline" size="lg" className="rounded-full">
+                <Link to="/cadastrar">Cadastrar produto</Link>
+              </Button>
+            </div>
+          </div>
+          <div className="relative animate-subir [animation-delay:150ms]">
+            <div className="absolute -inset-3 rotate-2 rounded-[2.5rem] border-2 border-dashed border-primary/40" />
+            <img
+              src={imagemHero}
+              alt="Bolsa de crochê terracota com alças de madeira"
+              className="relative aspect-[4/5] w-full rounded-[2rem] object-cover shadow-soft"
+            />
+          </div>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-6xl px-5 pt-16">
+        <div className="rounded-3xl bg-secondary p-6 sm:p-8">
+          <h2 className="font-display text-2xl text-secondary-foreground">Consultar produto</h2>
+          <p className="mt-1 text-sm text-secondary-foreground/80">Digite o nome da peça para ver o preço.</p>
+          <form onSubmit={consultar} className="mt-5 flex flex-col gap-3 sm:flex-row">
+            <Input
+              value={busca}
+              onChange={(e) => setBusca(e.target.value)}
+              placeholder="Ex.: Bolsa Aurora"
+              aria-label="Nome do produto"
+              className="h-11 rounded-full bg-card px-5"
+            />
+            <Button type="submit" variant="hero" className="h-11 px-6">
+              <Search /> Consultar
+            </Button>
+          </form>
+          {resultado && (
+            <p
+              role="status"
+              className={
+                resultado.tipo === "encontrado"
+                  ? "mt-4 font-semibold text-secondary-foreground"
+                  : "mt-4 font-semibold text-destructive"
+              }
+            >
+              {resultado.tipo === "encontrado"
+                ? `Produto encontrado: ${resultado.produto.nome} - ${formatarPreco(resultado.produto.preco)}`
+                : "Produto não encontrado."}
+            </p>
+          )}
+        </div>
+      </section>
+
+      <section id="pecas" className="mx-auto max-w-6xl scroll-mt-24 px-5 pt-16">
+        <div className="flex items-end justify-between gap-4">
+          <h2 className="font-display text-4xl text-foreground">Nossas peças</h2>
+          <p className="text-sm text-muted-foreground">{produtos.length} produtos cadastrados</p>
+        </div>
+        {produtos.length === 0 ? (
+          <p className="mt-8 rounded-3xl border border-dashed border-border p-10 text-center text-muted-foreground">
+            Nenhum produto cadastrado ainda.
+          </p>
+        ) : (
+          <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {produtos.map((produto, i) => (
+              <ProdutoCard key={produto.id} produto={produto} numero={i + 1} />
+            ))}
+          </div>
+        )}
+      </section>
+    </>
   );
 }
