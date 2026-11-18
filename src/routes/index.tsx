@@ -125,7 +125,7 @@ function Vitrine() {
           <div>
             <p className="font-script text-2xl text-primary">Do seu jeitinho</p>
             <h2 className="mt-2 font-display text-3xl text-secondary-foreground sm:text-4xl">Peças sob encomenda</h2>
-            <p className="mt-4 max-w-xl text-secondary-foreground/80">Tem uma bolsa ou acessório em mente? Conte suas ideias e cores preferidas. Combinamos os detalhes, o valor e o prazo pelo WhatsApp ou Instagram.</p>
+            <p className="mt-4 max-w-xl text-secondary-foreground/80">Tem uma bolsa ou acessório em mente? Conte suas ideias e as cores que você quer. Combinamos o modelo, as cores, o valor e o prazo pelo WhatsApp ou Instagram.</p>
           </div>
           <div className="flex flex-wrap gap-3">
             <Button asChild variant="whatsapp" size="lg" className="px-5">

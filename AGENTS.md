@@ -36,3 +36,5 @@ use the editor.
 - Uploaded product photos are stored as resized JPEG data URLs in `produtos.imagem`; why: the workspace blocks public storage buckets.
 - Store contacts (WhatsApp, Instagram) are defined only in `src/lib/contato.ts`; why: one place to change them.
 - Product descriptions persist in `produtos.descricao`; editing reuses the protected product form and browser writes under the existing admin RLS; why: visitors see saved changes without introducing a second permission path.
+- Every product has its own public page at `/produto/$slug` (`src/routes/produto.$slug.tsx`), the slug coming from `slugDeProduto(nome)` in `src/lib/produtos.ts`; why: cards and "outras peças" link by name-based URL, so a new product needs no extra route.
+- In a `createFileRoute` object declare `loader` before `head` whenever `head` reads `loaderData`; why: with `head` first TypeScript infers the loader data as `never`/`undefined` and the typecheck fails.

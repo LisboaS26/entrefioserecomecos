@@ -1,13 +1,17 @@
+import { Link } from "@tanstack/react-router";
 import { Instagram, MessageCircle } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { LINK_INSTAGRAM, linkWhatsApp } from "@/lib/contato";
-import { formatarPreco, type Produto } from "@/lib/produtos";
+import { formatarPreco, slugDeProduto, type Produto } from "@/lib/produtos";
 
 export function ProdutoCard({ produto, numero }: { produto: Produto; numero: number }) {
+  const slug = slugDeProduto(produto.nome);
+  const endereco = { to: "/produto/$slug", params: { slug } } as const;
+
   return (
     <article className="group flex flex-col overflow-hidden rounded-3xl bg-card shadow-soft ring-1 ring-border transition-transform duration-300 hover:-translate-y-1">
-      <div className="relative aspect-[4/5] overflow-hidden bg-muted">
+      <Link {...endereco} className="relative block aspect-[4/5] overflow-hidden bg-muted">
         <img
           src={produto.imagem}
           alt={produto.nome}
@@ -20,10 +24,17 @@ export function ProdutoCard({ produto, numero }: { produto: Produto; numero: num
         <span className="absolute right-3 top-3 rounded-full bg-accent px-3 py-1 text-xs font-semibold text-accent-foreground">
           {produto.categoria}
         </span>
-      </div>
+        <span className="absolute inset-x-3 bottom-3 rounded-full bg-background/90 px-3 py-1.5 text-center text-xs font-bold text-primary opacity-0 shadow-soft transition-opacity duration-300 group-hover:opacity-100">
+          Ver detalhes da peça
+        </span>
+      </Link>
       <div className="flex flex-1 flex-col gap-4 p-5">
         <div className="flex items-baseline justify-between gap-3 border-b border-dashed border-border pb-3">
-          <h3 className="font-display text-xl text-card-foreground">{produto.nome}</h3>
+          <h3 className="font-display text-xl text-card-foreground">
+            <Link {...endereco} className="transition-colors hover:text-primary">
+              {produto.nome}
+            </Link>
+          </h3>
           <p className="shrink-0 font-bold text-primary">{formatarPreco(produto.preco)}</p>
         </div>
         <p className="whitespace-pre-line break-words text-sm leading-relaxed text-muted-foreground">

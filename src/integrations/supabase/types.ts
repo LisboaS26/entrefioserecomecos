@@ -29,29 +29,41 @@ export type Database = {
       produtos: {
         Row: {
           categoria: string
+          cores: string
           created_at: string
           descricao: string
           id: string
           imagem: string
+          material: string
+          medidas: string
           nome: string
+          prazo: string
           preco: number
         }
         Insert: {
           categoria?: string
+          cores?: string
           created_at?: string
           descricao?: string
           id?: string
           imagem: string
+          material?: string
+          medidas?: string
           nome: string
+          prazo?: string
           preco: number
         }
         Update: {
           categoria?: string
+          cores?: string
           created_at?: string
           descricao?: string
           id?: string
           imagem?: string
+          material?: string
+          medidas?: string
           nome?: string
+          prazo?: string
           preco?: number
         }
         Relationships: []

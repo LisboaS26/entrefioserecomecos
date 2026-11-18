@@ -1,6 +1,7 @@
 # Roadmap
 
 ## Melhorias concluídas
+- [x] Clicar numa peça abre a página dela: foto inteira, descrição, material e medidas, botões de pedido e lista de outras peças.
 - [x] Foto do topo troca sozinha entre as bolsas da loja, com esmaecer suave, botão de pausar e pontinhos para escolher a peça.
 - [x] Botão "Cadastrar" no topo, ao lado de "Vitrine"; quem não é da loja cai na tela de login.
 - [x] Descrição de cada produto na vitrine e no cadastro; texto padrão até a mãe preencher os detalhes.

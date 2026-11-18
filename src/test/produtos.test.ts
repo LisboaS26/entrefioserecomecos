@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { consultarProduto, lerPreco, precoValido, type Produto } from "@/lib/produtos";
+import { buscarProdutoPorSlug, consultarProduto, lerPreco, precoValido, slugDeProduto, type Produto } from "@/lib/produtos";
 
 const lista: Produto[] = [
   { id: "1", nome: "Bolsa Aurora", preco: 189.9, categoria: "Bolsa", imagem: "", descricao: "" },
@@ -29,5 +29,23 @@ describe("consultar produto", () => {
 
   it("retorna nada quando o produto não existe", () => {
     expect(consultarProduto(lista, "Chapéu")).toBeNull();
+  });
+});
+
+describe("página de detalhes da peça", () => {
+  it("transforma o nome no endereço da página", () => {
+    expect(slugDeProduto("Flor de Lótus")).toBe("flor-de-lotus");
+    expect(slugDeProduto("Bolsa Girassol")).toBe("bolsa-girassol");
+    expect(slugDeProduto("  Sálvia  ")).toBe("salvia");
+  });
+
+  it("acha a peça pelo endereço, sem ligar para maiúsculas", () => {
+    expect(buscarProdutoPorSlug(lista, "BOLSA-AURORA")?.preco).toBe(189.9);
+    expect(buscarProdutoPorSlug(lista, "xuxinha")?.categoria).toBe("Acessório");
+  });
+
+  it("retorna nada quando a peça não existe naquele endereço", () => {
+    expect(buscarProdutoPorSlug(lista, "bolso-aurora")).toBeNull();
+    expect(buscarProdutoPorSlug(lista, "")).toBeNull();
   });
 });

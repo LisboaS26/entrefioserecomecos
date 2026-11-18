@@ -97,6 +97,8 @@ function Cadastrar({ email }: { email: string }) {
   const [erroPreco, setErroPreco] = useState("");
   const [erroNome, setErroNome] = useState("");
   const [descricao, setDescricao] = useState("");
+  const [material, setMaterial] = useState("");
+  const [medidas, setMedidas] = useState("");
   const [editandoId, setEditandoId] = useState<string | null>(null);
 
   function limparFormulario() {
@@ -104,6 +106,8 @@ function Cadastrar({ email }: { email: string }) {
     setNome("");
     setPreco("");
     setDescricao("");
+    setMaterial("");
+    setMedidas("");
     setCategoria("Bolsa");
     setImagem(fotosProntas[0].url);
     setErroNome("");
@@ -117,6 +121,8 @@ function Cadastrar({ email }: { email: string }) {
     setCategoria(produto.categoria);
     setImagem(produto.imagem);
     setDescricao(produto.descricao);
+    setMaterial(produto.material ?? "");
+    setMedidas(produto.medidas ?? "");
     setErroNome("");
     setErroPreco("");
     document.getElementById("formulario-produto")?.scrollIntoView({ block: "start" });
@@ -143,7 +149,15 @@ function Cadastrar({ email }: { email: string }) {
 
     setSalvando(true);
     try {
-      const produto = { nome: nomeLimpo, preco: valor, categoria, imagem, descricao: descricao.trim() };
+      const produto = {
+        nome: nomeLimpo,
+        preco: valor,
+        categoria,
+        imagem,
+        descricao: descricao.trim(),
+        material: material.trim(),
+        medidas: medidas.trim(),
+      };
       if (editandoId) await editarProduto(editandoId, produto);
       else await cadastrarProduto(produto);
       await queryClient.invalidateQueries({ queryKey: produtosQuery.queryKey });
@@ -179,6 +193,17 @@ function Cadastrar({ email }: { email: string }) {
           <div className="space-y-2">
             <Label htmlFor="descricao">Descrição do produto</Label>
             <Textarea id="descricao" value={descricao} onChange={(e) => setDescricao(e.target.value)} rows={4} placeholder="Cor, tamanho, tipo de alça e detalhes da peça" />
+          </div>
+
+          <div className="grid gap-4 sm:grid-cols-2">
+            <div className="space-y-2">
+              <Label htmlFor="material">Material (opcional)</Label>
+              <Input id="material" value={material} onChange={(e) => setMaterial(e.target.value)} placeholder="Ex.: fio de algodão, com forro" className="h-11" />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="medidas">Medidas (opcional)</Label>
+              <Input id="medidas" value={medidas} onChange={(e) => setMedidas(e.target.value)} placeholder="Ex.: 30 x 25 cm, alça 60 cm" className="h-11" />
+            </div>
           </div>
 
           <div className="space-y-2">

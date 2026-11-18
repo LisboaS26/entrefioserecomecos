@@ -9,6 +9,9 @@ export interface Produto {
   categoria: Categoria;
   imagem: string;
   descricao: string;
+  /** Detalhes opcionais da peça, mostrados na página dela. */
+  material?: string;
+  medidas?: string;
 }
 
 /** Igual ao Python: o preço só é válido se for maior que zero. */
@@ -43,4 +46,21 @@ export function consultarProduto(produtos: Produto[], nomeBusca: string): Produt
 
 export function formatarPreco(preco: number): string {
   return preco.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+}
+
+/** Nome da peça vira endereço da página dela: "Flor de Lótus" -> "flor-de-lotus". */
+export function slugDeProduto(nome: string): string {
+  return nome
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLocaleLowerCase("pt-BR")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
+/** Acha a peça pelo endereço (ou pelo id), do mesmo jeito que o Python consultava pelo nome. */
+export function buscarProdutoPorSlug(produtos: Produto[], slug: string): Produto | null {
+  const alvo = slug.trim().toLocaleLowerCase("pt-BR");
+  if (!alvo) return null;
+  return produtos.find((p) => slugDeProduto(p.nome) === alvo || p.id === alvo) ?? null;
 }
