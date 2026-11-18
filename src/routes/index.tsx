@@ -1,10 +1,11 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
-import { Search } from "lucide-react";
+import { createFileRoute } from "@tanstack/react-router";
+import { Instagram, Search } from "lucide-react";
 import { useState, type FormEvent } from "react";
 
 import { ProdutoCard } from "@/components/loja/ProdutoCard";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { LINK_INSTAGRAM } from "@/lib/contato";
 import { imagemHero } from "@/lib/imagens";
 import { consultarProduto, formatarPreco, type Produto } from "@/lib/produtos";
 import { useProdutos } from "@/lib/produtos-store";
@@ -57,7 +58,9 @@ function Vitrine() {
                 <a href="#pecas">Ver as peças</a>
               </Button>
               <Button asChild variant="outline" size="lg" className="rounded-full">
-                <Link to="/cadastrar">Cadastrar produto</Link>
+                <a href={LINK_INSTAGRAM} target="_blank" rel="noreferrer">
+                  <Instagram /> Seguir no Instagram
+                </a>
               </Button>
             </div>
           </div>

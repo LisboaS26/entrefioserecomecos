@@ -33,6 +33,9 @@
   --font-display: "Fraunces", Georgia, serif;
   --font-sans: "Nunito", system-ui, sans-serif;
   --font-script: "Dancing Script", "Brush Script MT", cursive;
+  --color-google: var(--google);
+  --color-google-foreground: var(--google-foreground);
+  --color-google-border: var(--google-border);
   --color-whatsapp: var(--whatsapp);
   --color-whatsapp-foreground: var(--whatsapp-foreground);
   --color-instagram: var(--instagram);
@@ -105,6 +108,10 @@
   --whatsapp-foreground: oklch(0.98 0.01 150);
   --instagram: oklch(0.56 0.17 10);
   --instagram-foreground: oklch(0.98 0.01 10);
+  /* Botão do Google (cores exigidas pelo Google) */
+  --google: oklch(1 0 0);
+  --google-foreground: oklch(0.235 0 0);
+  --google-border: oklch(0.56 0.004 150);
   /* Cores do fio arco-íris da borda da logo */
   --fio-1: oklch(0.62 0.2 355);
   --fio-2: oklch(0.72 0.17 50);

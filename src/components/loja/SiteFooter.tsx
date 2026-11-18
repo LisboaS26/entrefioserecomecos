@@ -1,4 +1,5 @@
-import { Heart, Instagram, MessageCircle } from "lucide-react";
+import { Link } from "@tanstack/react-router";
+import { Heart, Instagram, Lock, MessageCircle } from "lucide-react";
 
 import { INSTAGRAM_USUARIO, LINK_INSTAGRAM, linkWhatsApp } from "@/lib/contato";
 import { logoUrl } from "@/lib/logo";
@@ -25,6 +26,9 @@ export function SiteFooter() {
           <p className="mt-2 inline-flex items-center gap-1 text-xs opacity-70">
             Feito à mão com <Heart className="size-3 fill-current" />
           </p>
+          <Link to="/cadastrar" className="inline-flex items-center gap-1 text-xs opacity-60 hover:underline hover:opacity-100">
+            <Lock className="size-3" /> Área da loja
+          </Link>
         </div>
       </div>
     </footer>

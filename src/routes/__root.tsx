@@ -15,6 +15,7 @@ import { SiteFooter } from "../components/loja/SiteFooter";
 import { SiteHeader } from "../components/loja/SiteHeader";
 import { Toaster } from "../components/ui/sonner";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+import { produtosQuery } from "../lib/produtos-store";
 
 function NotFoundComponent() {
   return (
@@ -105,6 +106,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       },
     ],
   }),
+  loader: ({ context }) => context.queryClient.ensureQueryData(produtosQuery),
   shellComponent: RootShell,
   component: RootComponent,
   notFoundComponent: NotFoundComponent,

@@ -31,5 +31,7 @@ use the editor.
 
 ## Project rules
 - Store rules (price validation, product lookup, price formatting) live as pure functions in `src/lib/produtos.ts` with tests in `src/test/`; why: they mirror the original Python assignment and must stay checkable.
-- Products are kept in the browser's localStorage via `src/lib/produtos-store.ts` (no backend); why: school project kept simple — move to Lovable Cloud if real multi-device catalog is needed.
+- Products live in the Cloud `produtos` table: public reads go through the `listarProdutos` server fn (root loader + `produtosQuery`), writes use the browser client and RLS allows only `admin` role; why: every visitor sees the same catalog and only the shop can change it.
+- Shop admins are granted by DB triggers from the `admin_emails` allowlist once the email is confirmed; `/cadastrar` lives under `_authenticated` and also checks the role; why: no one can self-promote from the browser.
+- Uploaded product photos are stored as resized JPEG data URLs in `produtos.imagem`; why: the workspace blocks public storage buckets.
 - Store contacts (WhatsApp, Instagram) are defined only in `src/lib/contato.ts`; why: one place to change them.

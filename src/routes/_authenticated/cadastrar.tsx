@@ -1,5 +1,6 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { ImagePlus, Plus, Trash2 } from "lucide-react";
+import { useQueryClient } from "@tanstack/react-query";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { ImagePlus, Lock, LogOut, Plus, Trash2 } from "lucide-react";
 import { useState, type ChangeEvent, type FormEvent } from "react";
 import { toast } from "sonner";
 
@@ -8,10 +9,12 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { fotosProntas } from "@/lib/imagens";
 import { formatarPreco, lerPreco, precoValido, type Categoria } from "@/lib/produtos";
-import { cadastrarProduto, removerProduto, useProdutos } from "@/lib/produtos-store";
+import { ehDaLoja } from "@/hooks/use-sessao";
+import { supabase } from "@/integrations/supabase/client";
+import { cadastrarProduto, produtosQuery, removerProduto, useProdutos } from "@/lib/produtos-store";
 import { cn } from "@/lib/utils";
 
-export const Route = createFileRoute("/cadastrar")({
+export const Route = createFileRoute("/_authenticated/cadastrar")({
   head: () => ({
     meta: [
       { title: "Cadastrar produto — Entre Fios e Recomeços" },
@@ -20,9 +23,15 @@ export const Route = createFileRoute("/cadastrar")({
       { property: "og:description", content: "Adicione peças novas na vitrine da loja de crochê." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
+      { name: "robots", content: "noindex" },
     ],
   }),
-  component: Cadastrar,
+  ssr: false,
+  loader: async ({ context }) => ({
+    email: context.user.email ?? "",
+    daLoja: await ehDaLoja(context.user.id),
+  }),
+  component: AreaDaLoja,
 });
 
 /** Diminui a foto para caber no navegador sem pesar. */
@@ -34,7 +43,7 @@ function reduzirFoto(arquivo: File): Promise<string> {
       const img = new Image();
       img.onerror = () => reject(new Error("Arquivo de imagem inválido."));
       img.onload = () => {
-        const lado = 600;
+        const lado = 800;
         const escala = Math.min(1, lado / Math.max(img.width, img.height));
         const canvas = document.createElement("canvas");
         canvas.width = Math.round(img.width * escala);
@@ -48,8 +57,38 @@ function reduzirFoto(arquivo: File): Promise<string> {
   });
 }
 
-function Cadastrar() {
+async function sair(navegar: () => void) {
+  await supabase.auth.signOut();
+  navegar();
+}
+
+function AreaDaLoja() {
+  const { email, daLoja } = Route.useLoaderData();
+  const navigate = useNavigate();
+  if (!daLoja) {
+    return (
+      <div className="mx-auto max-w-lg px-5 py-20 text-center">
+        <div className="mx-auto flex size-14 items-center justify-center rounded-full bg-secondary text-primary">
+          <Lock className="size-6" />
+        </div>
+        <h1 className="mt-5 font-display text-3xl text-foreground">Área só da loja</h1>
+        <p className="mt-3 text-muted-foreground">
+          A conta <strong className="text-foreground">{email}</strong> não tem permissão para cadastrar peças.
+        </p>
+        <Button variant="hero" className="mt-6" onClick={() => sair(() => navigate({ to: "/" }))}>
+          <LogOut /> Sair
+        </Button>
+      </div>
+    );
+  }
+  return <Cadastrar email={email} />;
+}
+
+function Cadastrar({ email }: { email: string }) {
   const produtos = useProdutos();
+  const queryClient = useQueryClient();
+  const navigate = useNavigate();
+  const [salvando, setSalvando] = useState(false);
   const [nome, setNome] = useState("");
   const [preco, setPreco] = useState("");
   const [categoria, setCategoria] = useState<Categoria>("Bolsa");
@@ -67,7 +106,7 @@ function Cadastrar() {
     }
   }
 
-  function enviar(e: FormEvent) {
+  async function enviar(e: FormEvent) {
     e.preventDefault();
     const valor = lerPreco(preco);
     const nomeLimpo = nome.trim();
@@ -75,16 +114,30 @@ function Cadastrar() {
     setErroPreco(precoValido(valor) ? "" : "Preço inválido. Digite um valor maior que zero.");
     if (!nomeLimpo || !precoValido(valor)) return;
 
-    cadastrarProduto({ nome: nomeLimpo, preco: valor, categoria, imagem });
-    toast.success("Produto cadastrado com sucesso!");
-    setNome("");
-    setPreco("");
+    setSalvando(true);
+    try {
+      await cadastrarProduto({ nome: nomeLimpo, preco: valor, categoria, imagem });
+      await queryClient.invalidateQueries({ queryKey: produtosQuery.queryKey });
+      toast.success("Produto cadastrado com sucesso!");
+      setNome("");
+      setPreco("");
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : "Não foi possível cadastrar.");
+    } finally {
+      setSalvando(false);
+    }
   }
 
   return (
     <div className="mx-auto grid max-w-6xl gap-10 px-5 py-14 lg:grid-cols-2 [&>*]:min-w-0">
       <section>
-        <p className="text-sm font-bold uppercase tracking-[0.2em] text-primary">Área da loja</p>
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <p className="text-sm font-bold uppercase tracking-[0.2em] text-primary">Área da loja</p>
+          <Button variant="outline" size="sm" className="rounded-full" onClick={() => sair(() => navigate({ to: "/" }))}>
+            <LogOut /> Sair
+          </Button>
+        </div>
+        <p className="mt-2 text-xs text-muted-foreground">Conectada como {email}</p>
         <h1 className="mt-3 font-display text-4xl text-foreground sm:text-5xl">Cadastrar produto</h1>
 
         <form onSubmit={enviar} noValidate className="mt-8 space-y-6 rounded-3xl bg-card p-6 shadow-soft ring-1 ring-border sm:p-8">
@@ -149,8 +202,8 @@ function Cadastrar() {
             )}
           </fieldset>
 
-          <Button type="submit" variant="hero" size="lg" className="w-full">
-            <Plus /> Cadastrar produto
+          <Button type="submit" variant="hero" size="lg" className="w-full" disabled={salvando}>
+            <Plus /> {salvando ? "Salvando..." : "Cadastrar produto"}
           </Button>
         </form>
       </section>
@@ -174,9 +227,15 @@ function Cadastrar() {
                 variant="ghost"
                 size="icon"
                 aria-label={`Remover ${p.nome}`}
-                onClick={() => {
-                  removerProduto(p.id);
-                  toast(`"${p.nome}" removido.`);
+                onClick={async () => {
+                  if (!window.confirm(`Remover "${p.nome}" da vitrine?`)) return;
+                  try {
+                    await removerProduto(p.id);
+                    await queryClient.invalidateQueries({ queryKey: produtosQuery.queryKey });
+                    toast(`"${p.nome}" removido.`);
+                  } catch (err) {
+                    toast.error(err instanceof Error ? err.message : "Não foi possível remover.");
+                  }
                 }}
               >
                 <Trash2 />
