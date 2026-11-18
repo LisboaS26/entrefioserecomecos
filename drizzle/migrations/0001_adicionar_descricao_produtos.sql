@@ -1,0 +1,1 @@
+ALTER TABLE public.produtos ADD COLUMN descricao text NOT NULL DEFAULT '';

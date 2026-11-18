@@ -26,6 +26,9 @@ export function ProdutoCard({ produto, numero }: { produto: Produto; numero: num
           <h3 className="font-display text-xl text-card-foreground">{produto.nome}</h3>
           <p className="shrink-0 font-bold text-primary">{formatarPreco(produto.preco)}</p>
         </div>
+        <p className="whitespace-pre-line break-words text-sm leading-relaxed text-muted-foreground">
+          {produto.descricao || "Peça de crochê feita à mão, com carinho em cada ponto."}
+        </p>
         <div className="mt-auto grid grid-cols-2 gap-2">
           <Button asChild variant="whatsapp" size="sm">
             <a

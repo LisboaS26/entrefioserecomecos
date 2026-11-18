@@ -3,8 +3,8 @@ import { describe, expect, it } from "vitest";
 import { consultarProduto, lerPreco, precoValido, type Produto } from "@/lib/produtos";
 
 const lista: Produto[] = [
-  { id: "1", nome: "Bolsa Aurora", preco: 189.9, categoria: "Bolsa", imagem: "" },
-  { id: "2", nome: "Xuxinha", preco: 15, categoria: "Acessório", imagem: "" },
+  { id: "1", nome: "Bolsa Aurora", preco: 189.9, categoria: "Bolsa", imagem: "", descricao: "" },
+  { id: "2", nome: "Xuxinha", preco: 15, categoria: "Acessório", imagem: "", descricao: "" },
 ];
 
 describe("regras do cadastro", () => {

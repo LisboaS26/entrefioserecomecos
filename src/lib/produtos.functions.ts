@@ -20,7 +20,7 @@ export const listarProdutos = createServerFn({ method: "GET" }).handler(async ()
   });
   const { data, error } = await supabasePublico
     .from("produtos")
-    .select("id, nome, preco, categoria, imagem")
+    .select("id, nome, preco, categoria, imagem, descricao")
     .order("created_at", { ascending: true });
   if (error) throw new Error("Não foi possível carregar as peças.");
   return data.map((p) => ({
@@ -29,5 +29,6 @@ export const listarProdutos = createServerFn({ method: "GET" }).handler(async ()
     preco: Number(p.preco),
     categoria: p.categoria as Categoria,
     imagem: p.imagem,
+    descricao: p.descricao,
   }));
 });

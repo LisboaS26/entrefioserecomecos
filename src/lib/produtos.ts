@@ -8,6 +8,7 @@ export interface Produto {
   preco: number;
   categoria: Categoria;
   imagem: string;
+  descricao: string;
 }
 
 /** Igual ao Python: o preço só é válido se for maior que zero. */

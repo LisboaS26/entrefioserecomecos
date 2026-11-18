@@ -35,3 +35,4 @@ use the editor.
 - Shop admins are granted by DB triggers from the `admin_emails` allowlist once the email is confirmed; `/cadastrar` lives under `_authenticated` and also checks the role; why: no one can self-promote from the browser.
 - Uploaded product photos are stored as resized JPEG data URLs in `produtos.imagem`; why: the workspace blocks public storage buckets.
 - Store contacts (WhatsApp, Instagram) are defined only in `src/lib/contato.ts`; why: one place to change them.
+- Product descriptions persist in `produtos.descricao`; editing reuses the protected product form and browser writes under the existing admin RLS; why: visitors see saved changes without introducing a second permission path.

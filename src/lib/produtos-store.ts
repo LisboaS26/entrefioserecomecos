@@ -23,3 +23,8 @@ export async function removerProduto(id: string) {
   const { data, error } = await supabase.from("produtos").delete().eq("id", id).select("id");
   if (error || !data?.length) throw new Error("Não foi possível remover essa peça.");
 }
+
+export async function editarProduto(id: string, produto: Omit<Produto, "id">) {
+  const { data, error } = await supabase.from("produtos").update(produto).eq("id", id).select("id");
+  if (error || !data?.length) throw new Error("Não foi possível salvar as alterações. Confira a conta da loja.");
+}

@@ -30,6 +30,7 @@ export type Database = {
         Row: {
           categoria: string
           created_at: string
+          descricao: string
           id: string
           imagem: string
           nome: string
@@ -38,6 +39,7 @@ export type Database = {
         Insert: {
           categoria?: string
           created_at?: string
+          descricao?: string
           id?: string
           imagem: string
           nome: string
@@ -46,6 +48,7 @@ export type Database = {
         Update: {
           categoria?: string
           created_at?: string
+          descricao?: string
           id?: string
           imagem?: string
           nome?: string

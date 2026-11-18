@@ -1,5 +1,11 @@
 # Roadmap
 
+## Melhorias concluídas
+- [x] Descrição de cada produto na vitrine e no cadastro; texto padrão até a mãe preencher os detalhes.
+- [x] Edição de produtos restrita à conta já autorizada da mãe.
+- [x] Pedidos sob encomenda pelo WhatsApp e Instagram existentes.
+- [x] Edição salva e lida na vitrine, visitante sem acesso e contatos verificados no computador e celular.
+
 ## Feito
 - [x] Área segura da loja: só a mãe (maria_jlsa@yahoo.com.br) entra e cadastra/remove peças; visitantes não veem o botão de cadastro e são mandados para a tela de login.
   - Peças guardadas no banco (todo mundo vê as mesmas); o banco recusa cadastro de quem não é da loja.

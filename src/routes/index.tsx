@@ -1,11 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Instagram, Search } from "lucide-react";
+import { Instagram, MessageCircle, Search } from "lucide-react";
 import { useState, type FormEvent } from "react";
 
 import { ProdutoCard } from "@/components/loja/ProdutoCard";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { LINK_INSTAGRAM } from "@/lib/contato";
+import { LINK_INSTAGRAM, linkWhatsApp } from "@/lib/contato";
 import { imagemHero } from "@/lib/imagens";
 import { consultarProduto, formatarPreco, type Produto } from "@/lib/produtos";
 import { useProdutos } from "@/lib/produtos-store";
@@ -22,6 +22,8 @@ export const Route = createFileRoute("/")({
       { property: "og:description", content: "Bolsas de crochê feitas à mão. Tecendo novos caminhos, ponto a ponto." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      { property: "og:image", content: imagemHero },
+      { name: "twitter:image", content: imagemHero },
     ],
   }),
   component: Vitrine,
@@ -125,6 +127,23 @@ function Vitrine() {
             ))}
           </div>
         )}
+      </section>
+      <section id="encomendas" className="mt-16 bg-secondary">
+        <div className="mx-auto grid max-w-6xl gap-8 px-5 py-12 md:grid-cols-[1.2fr_1fr] md:items-center">
+          <div>
+            <p className="font-script text-2xl text-primary">Do seu jeitinho</p>
+            <h2 className="mt-2 font-display text-3xl text-secondary-foreground sm:text-4xl">Peças sob encomenda</h2>
+            <p className="mt-4 max-w-xl text-secondary-foreground/80">Tem uma bolsa ou acessório em mente? Conte suas ideias e cores preferidas. Combinamos os detalhes, o valor e o prazo pelo WhatsApp ou Instagram.</p>
+          </div>
+          <div className="flex flex-wrap gap-3">
+            <Button asChild variant="whatsapp" size="lg" className="px-5">
+              <a href={linkWhatsApp("Olá! Gostaria de fazer um pedido sob encomenda na Entre Fios e Recomeços. Podemos conversar sobre o modelo, as cores, o valor e o prazo?")} target="_blank" rel="noreferrer"><MessageCircle /> Encomendar pelo WhatsApp</a>
+            </Button>
+            <Button asChild variant="instagram" size="lg" className="px-5">
+              <a href={LINK_INSTAGRAM} target="_blank" rel="noreferrer"><Instagram /> Encomendar pelo Instagram</a>
+            </Button>
+          </div>
+        </div>
       </section>
     </>
   );

@@ -8,6 +8,13 @@
       "when": 1794969810685,
       "tag": "0000_area_da_loja_e_produtos",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1794972571951,
+      "tag": "0001_adicionar_descricao_produtos",
+      "breakpoints": true
     }
   ]
 }
