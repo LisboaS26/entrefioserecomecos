@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "@tanstack/react-router";
-import { LogOut } from "lucide-react";
+import { LogOut, Plus } from "lucide-react";
 
 import { logoUrl } from "@/lib/logo";
 import { useSessao } from "@/hooks/use-sessao";
@@ -8,7 +8,7 @@ import { useProdutos } from "@/lib/produtos-store";
 
 export function SiteHeader() {
   const produtos = useProdutos();
-  const { daLoja, email } = useSessao();
+  const { email } = useSessao();
   const navigate = useNavigate();
   return (
     <header className="sticky top-0 z-20 bg-background/90 backdrop-blur">
@@ -39,15 +39,13 @@ export function SiteHeader() {
           >
             Vitrine
           </Link>
-          {daLoja && (
-            <Link
-              to="/cadastrar"
-              className="rounded-full px-4 py-2 text-muted-foreground transition-colors hover:text-foreground"
-              activeProps={{ className: "bg-secondary text-secondary-foreground" }}
-            >
-              Cadastrar produto
-            </Link>
-          )}
+          <Link
+            to="/cadastrar"
+            className="inline-flex items-center gap-1.5 rounded-full bg-primary px-4 py-2 text-primary-foreground shadow-soft transition-colors hover:bg-primary/90"
+            activeProps={{ className: "inline-flex items-center gap-1.5 rounded-full bg-primary px-4 py-2 text-primary-foreground shadow-soft transition-colors hover:bg-primary/90 ring-2 ring-primary/30" }}
+          >
+            <Plus className="size-4" /> Cadastrar
+          </Link>
           {email && (
             <button
               type="button"
