@@ -3,10 +3,10 @@ import { Instagram, MessageCircle, Search } from "lucide-react";
 import { useState, type FormEvent } from "react";
 
 import { ProdutoCard } from "@/components/loja/ProdutoCard";
+import { HeroCarrossel } from "@/components/loja/HeroCarrossel";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { LINK_INSTAGRAM, linkWhatsApp } from "@/lib/contato";
-import { imagemHero } from "@/lib/imagens";
 import { consultarProduto, formatarPreco, type Produto } from "@/lib/produtos";
 import { useProdutos } from "@/lib/produtos-store";
 
@@ -22,8 +22,6 @@ export const Route = createFileRoute("/")({
       { property: "og:description", content: "Bolsas de crochê feitas à mão. Tecendo novos caminhos, ponto a ponto." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
-      { property: "og:image", content: imagemHero },
-      { name: "twitter:image", content: imagemHero },
     ],
   }),
   component: Vitrine,
@@ -67,13 +65,7 @@ function Vitrine() {
             </div>
           </div>
           <div className="relative animate-subir [animation-delay:150ms]">
-            <div className="moldura-fio relative rotate-1 rounded-[2.4rem] p-2 shadow-soft">
-              <img
-                src={imagemHero}
-                alt="Bolsa de crochê hexagonal rosé com flores, a Bolsa Flor de Lótus"
-                className="aspect-[4/5] w-full -rotate-1 rounded-[2rem] object-cover"
-              />
-            </div>
+            <HeroCarrossel produtos={produtos} />
           </div>
         </div>
       </section>
