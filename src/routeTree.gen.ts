@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AuthRouteImport } from './routes/auth'
+import { Route as CarrinhoRouteImport } from './routes/carrinho'
 import { Route as RedefinirSenhaRouteImport } from './routes/redefinir-senha'
 import { Route as AuthenticatedCadastrarRouteImport } from './routes/_authenticated/cadastrar'
 import { Route as ProdutoSlugRouteImport } from './routes/produto.$slug'
@@ -28,6 +29,11 @@ const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
 const AuthRoute = AuthRouteImport.update({
   id: '/auth',
   path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CarrinhoRoute = CarrinhoRouteImport.update({
+  id: '/carrinho',
+  path: '/carrinho',
   getParentRoute: () => rootRouteImport,
 } as any)
 const RedefinirSenhaRoute = RedefinirSenhaRouteImport.update({
@@ -49,6 +55,7 @@ const ProdutoSlugRoute = ProdutoSlugRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/carrinho': typeof CarrinhoRoute
   '/redefinir-senha': typeof RedefinirSenhaRoute
   '/cadastrar': typeof AuthenticatedCadastrarRoute
   '/produto/$slug': typeof ProdutoSlugRoute
@@ -56,6 +63,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/carrinho': typeof CarrinhoRoute
   '/redefinir-senha': typeof RedefinirSenhaRoute
   '/cadastrar': typeof AuthenticatedCadastrarRoute
   '/produto/$slug': typeof ProdutoSlugRoute
@@ -65,6 +73,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
+  '/carrinho': typeof CarrinhoRoute
   '/redefinir-senha': typeof RedefinirSenhaRoute
   '/_authenticated/cadastrar': typeof AuthenticatedCadastrarRoute
   '/produto/$slug': typeof ProdutoSlugRoute
@@ -72,14 +81,26 @@ export interface FileRoutesById {
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    '/' | '/auth' | '/redefinir-senha' | '/cadastrar' | '/produto/$slug'
+    | '/'
+    | '/auth'
+    | '/carrinho'
+    | '/redefinir-senha'
+    | '/cadastrar'
+    | '/produto/$slug'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/auth' | '/redefinir-senha' | '/cadastrar' | '/produto/$slug'
+  to:
+    | '/'
+    | '/auth'
+    | '/carrinho'
+    | '/redefinir-senha'
+    | '/cadastrar'
+    | '/produto/$slug'
   id:
     | '__root__'
     | '/'
     | '/_authenticated'
     | '/auth'
+    | '/carrinho'
     | '/redefinir-senha'
     | '/_authenticated/cadastrar'
     | '/produto/$slug'
@@ -89,6 +110,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AuthRoute: typeof AuthRoute
+  CarrinhoRoute: typeof CarrinhoRoute
   RedefinirSenhaRoute: typeof RedefinirSenhaRoute
   ProdutoSlugRoute: typeof ProdutoSlugRoute
 }
@@ -114,6 +136,13 @@ declare module '@tanstack/react-router' {
       path: '/auth'
       fullPath: '/auth'
       preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/carrinho': {
+      id: '/carrinho'
+      path: '/carrinho'
+      fullPath: '/carrinho'
+      preLoaderRoute: typeof CarrinhoRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/redefinir-senha': {
@@ -155,6 +184,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AuthRoute: AuthRoute,
+  CarrinhoRoute: CarrinhoRoute,
   RedefinirSenhaRoute: RedefinirSenhaRoute,
   ProdutoSlugRoute: ProdutoSlugRoute,
 }

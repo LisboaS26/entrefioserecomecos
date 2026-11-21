@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { Instagram, MessageCircle } from "lucide-react";
 
+import { BotaoCarrinho } from "@/components/loja/BotaoCarrinho";
 import { Button } from "@/components/ui/button";
 import { LINK_INSTAGRAM, linkWhatsApp } from "@/lib/contato";
 import { formatarPreco, slugDeProduto, type Produto } from "@/lib/produtos";
@@ -40,7 +41,8 @@ export function ProdutoCard({ produto, numero }: { produto: Produto; numero: num
         <p className="whitespace-pre-line break-words text-sm leading-relaxed text-muted-foreground">
           {produto.descricao || "Peça de crochê feita à mão, com carinho em cada ponto."}
         </p>
-        <div className="mt-auto grid grid-cols-2 gap-2">
+        <BotaoCarrinho id={produto.id} className="mt-auto w-full" />
+        <div className="grid grid-cols-2 gap-2">
           <Button asChild variant="whatsapp" size="sm">
             <a
               href={linkWhatsApp(`Olá! Tenho interesse na peça "${produto.nome}" (${formatarPreco(produto.preco)}).`)}

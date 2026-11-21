@@ -1,6 +1,7 @@
 import { Link, createFileRoute, notFound } from "@tanstack/react-router";
 import { ArrowLeft, Instagram, MessageCircle, Package, Ruler } from "lucide-react";
 
+import { BotaoCarrinho } from "@/components/loja/BotaoCarrinho";
 import { Button } from "@/components/ui/button";
 import { LINK_INSTAGRAM, linkWhatsApp } from "@/lib/contato";
 import { buscarProdutoPorSlug, formatarPreco, slugDeProduto, type Produto } from "@/lib/produtos";
@@ -89,6 +90,7 @@ function PaginaProduto() {
           )}
 
           <div className="mt-8 flex flex-wrap gap-3">
+            <BotaoCarrinho id={produto.id} size="lg" />
             <Button asChild variant="whatsapp" size="lg">
               <a href={linkWhatsApp(mensagem)} target="_blank" rel="noreferrer">
                 <MessageCircle /> Pedir pelo WhatsApp

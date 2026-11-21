@@ -1,14 +1,16 @@
 import { Link, useNavigate } from "@tanstack/react-router";
-import { LogOut, Plus } from "lucide-react";
+import { LogOut, Plus, ShoppingBag } from "lucide-react";
 
 import { logoUrl } from "@/lib/logo";
 import { useSessao } from "@/hooks/use-sessao";
 import { supabase } from "@/integrations/supabase/client";
 import { useProdutos } from "@/lib/produtos-store";
+import { useCarrinho } from "@/lib/carrinho";
 
 export function SiteHeader() {
   const produtos = useProdutos();
   const { email } = useSessao();
+  const noCarrinho = useCarrinho().length;
   const navigate = useNavigate();
   return (
     <header className="sticky top-0 z-20 bg-background/90 backdrop-blur">
@@ -38,6 +40,14 @@ export function SiteHeader() {
             activeOptions={{ exact: true }}
           >
             Vitrine
+          </Link>
+          <Link
+            to="/carrinho"
+            className="relative inline-flex items-center gap-1.5 rounded-full px-4 py-2 text-muted-foreground transition-colors hover:text-foreground"
+            activeProps={{ className: "bg-secondary text-secondary-foreground" }}
+          >
+            <ShoppingBag className="size-4" /> Carrinho
+            {noCarrinho > 0 && <span className="rounded-full bg-primary px-1.5 text-xs text-primary-foreground">{noCarrinho}</span>}
           </Link>
           <Link
             to="/cadastrar"
